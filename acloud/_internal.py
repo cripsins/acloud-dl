@@ -163,6 +163,7 @@ class InternCloudGuruLectureStream(CloudGuruLectureStreams):
         self._dimention = width, height
         self._quality = self._resolution
         self._url = sources.get("url")
+        self._signedUrl = sources.get("signedUrl")
         self._path = sources.get("path")
         self._fsize = sources.get("size")
 

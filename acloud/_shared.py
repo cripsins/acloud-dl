@@ -282,6 +282,7 @@ class CloudGuruLectureStreams(object):
         self._dimention = None
         self._extension = None
         self._url = None
+        self._signedUrl = None
         self._path = None
 
         self._parent = parent
@@ -310,6 +311,10 @@ class CloudGuruLectureStreams(object):
     @property
     def url(self):
         return self._url
+
+    @property
+    def signedUrl(self):
+        return self._signedUrl
 
     @property
     def path(self):
@@ -380,13 +385,13 @@ class CloudGuruLectureStreams(object):
 
         try:
             req = compat_request(
-                self.url, headers={"User-Agent": HEADERS.get("User-Agent")}
+                self.url if self.signedUrl is None else self.signedUrl, headers={"User-Agent": HEADERS.get("User-Agent")}
             )
             response = compat_urlopen(req)
         except compat_urlerr as e:
             retVal = {
                 "status": "False",
-                "msg": "URLError : either your internet connection is not working or server aborted the request",
+                "msg": "URLError : either your internet connection is not working or server aborted the request Reason " + e.reason, #+ " URL: " + self.url + " Signed Url: " + str(self.signedUrl),
             }
             return retVal
         except compat_httperr as e:

@@ -391,10 +391,28 @@ class CloudGuru(ProgressBar):
             if resolution:
                 source_type = entry.get("type").replace("video/", "")
                 url = entry.get("key")
+                signedUrl = entry.get("signedUrl")
                 bucket = entry.get("bucket")
                 filesize = entry.get("filesize") or 0
                 query = {"bucket": bucket, "filePath": url}
                 height, width = ret_hw(resolution)
+
+
+                #sys.stdout.write(
+                #        fc
+                #        + sd
+                #        + "["
+                #        + fr
+                #        + sb
+                #        + "-"
+                #        + fc
+                #        + sd
+                #        + "] : "
+                #        + fr
+                #        + sb
+                #        + "Creating source, found URL : " + url + " Signed URL : " + str(signedUrl) + " \n"
+                #    )
+
                 _temp.append(
                     {
                         "quality": resolution,
@@ -402,6 +420,7 @@ class CloudGuru(ProgressBar):
                         "extension": source_type,
                         "path": url,
                         "url": query,
+                        "signedUrl": signedUrl,
                         "height": height,
                         "width": width,
                         "size": filesize,
@@ -410,6 +429,7 @@ class CloudGuru(ProgressBar):
             if not resolution:
                 source_type = entry.get("type").replace("video/", "")
                 url = entry.get("key")
+                signedUrl = entry.get("signedUrl")
                 bucket = entry.get("bucket")
                 filesize = entry.get("filesize") or 0
                 query = {"bucket": bucket, "filePath": url}
@@ -425,6 +445,7 @@ class CloudGuru(ProgressBar):
                         "extension": source_type,
                         "path": url,
                         "url": query,
+                        "signedUrl": signedUrl,
                         "height": height,
                         "width": width,
                         "size": filesize,
